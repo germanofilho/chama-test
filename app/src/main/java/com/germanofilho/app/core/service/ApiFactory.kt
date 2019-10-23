@@ -1,6 +1,7 @@
 package com.germanofilho.app.core.service
 
 import com.germanofilho.chamaapp.BuildConfig
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -29,6 +30,7 @@ object ApiFactory {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(client)
             .build()
             .create(api)

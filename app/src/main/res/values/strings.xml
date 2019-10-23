@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Chama App</string>
+    <string name="error_service">Something went wrong to retrieve places location</string>
+    <string name="error_permission">This application needs to Location Permission</string>
+    <string name="try_again">Try Again</string>
 </resources>

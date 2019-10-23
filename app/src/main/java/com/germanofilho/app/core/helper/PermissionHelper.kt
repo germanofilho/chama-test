@@ -21,7 +21,9 @@ class PermissionHelper(private val activity: Activity){
     }
 
     fun permissionGranted(): Boolean{
-        if(ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
+        if(ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
             != PackageManager.PERMISSION_GRANTED){
             return false
         }
@@ -33,7 +35,8 @@ class PermissionHelper(private val activity: Activity){
         if(isAndroidM()){
             activity.requestPermissions(
                 arrayOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
                 ), REQUEST_CODE
             )
         }
