@@ -5,9 +5,12 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.germanofilho.app.core.helper.PermissionHelper
 import com.germanofilho.app.core.helper.observeResource
 import com.germanofilho.app.core.view.BaseActivity
+import com.germanofilho.app.data.model.entity.Result
+import com.germanofilho.app.feature.home.presentation.view.adapter.PlaceAdapter
 import com.germanofilho.app.feature.home.presentation.viewmodel.HomeViewModel
 import com.germanofilho.chamaapp.R
 import com.google.android.gms.location.LocationServices
@@ -68,11 +71,10 @@ class HomeActivity : BaseActivity(), IHomeView {
     override fun setupObservers() {
         viewModel.nearbyPlaces.observeResource(this,
             onSuccess = {
-                Log.i("Success", it.toString())
+               loadData(it.results)
             },
             onError = {
-                showSnackBar(getString(R.string.error_service))
-                { initWhenLocationReady() }
+                showError()
             },
             onLoading = { showLoading(it) }
         )
@@ -92,10 +94,12 @@ class HomeActivity : BaseActivity(), IHomeView {
     }
 
     override fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showSnackBar(getString(R.string.error_service))
+        { initWhenLocationReady() }
     }
 
-    override fun loadData() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun loadData(results: List<Result>) {
+        rv_places.layoutManager = LinearLayoutManager(this)
+        rv_places.adapter = PlaceAdapter(results)
     }
 }

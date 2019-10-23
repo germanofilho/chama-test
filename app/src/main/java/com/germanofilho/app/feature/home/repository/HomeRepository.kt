@@ -7,14 +7,19 @@ import com.germanofilho.app.data.source.remote.api.NearbyPlaceApi
 class HomeRepository: IHomeRepository{
 
     companion object{
-        const val TYPE = "restaurant"
+        const val RADIUS = 3500
+        const val CAFE = "cafe"
+        const val RESTAURANT = "restaurant"
+        const val BAR = "bar"
+        const val TYPES = "$CAFE|$RESTAURANT|$BAR"
     }
 
     override suspend fun fetchNearbyPlaces(lat: Double?, lng: Double?): PlaceResponse {
         if(isValidLocation(lat, lng)){
             return ApiFactory.request(NearbyPlaceApi::class.java).getNearbyPlaces(
                 location = formatToLatLng(lat!!,lng!!),
-                type = TYPE)
+                type = TYPES,
+                radius = RADIUS)
         }
 
         throw Exception("Location invalid!")
@@ -27,6 +32,5 @@ class HomeRepository: IHomeRepository{
     private fun isValidLocation(lat: Double?, lng: Double?): Boolean {
         return lat != null && lng != null
     }
-
 
 }
