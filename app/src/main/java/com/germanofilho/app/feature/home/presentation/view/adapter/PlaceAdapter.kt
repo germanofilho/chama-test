@@ -28,10 +28,11 @@ class PlaceAdapter(private val results : List<Result> = arrayListOf()) : Recycle
 
 class PlaceViewHolder(private val view: View, private val context: Context) : RecyclerView.ViewHolder(view){
     fun bind(result: Result) = with(view){
-        cl_item_parent.fadeAnimation()
+        cl_item_parent.fadeAnimation(300)
         txt_title.text = result.name
         txt_address.text = result.vicinity
         txt_rating.text = result.rating.toString()
+        txt_distance.text = context.getString(R.string.text_distance, result.distance)
         Glide.with(view)
             .load(result.icon)
             .centerCrop()
@@ -44,11 +45,9 @@ class PlaceViewHolder(private val view: View, private val context: Context) : Re
     private fun setOpeningHoursText(view: TextView, isOpened: Boolean?){
         if(isOpened == null || !isOpened){
             view.setTextColor(ContextCompat.getColorStateList(context, R.color.text_closed))
-            view.background = ContextCompat.getDrawable(context, R.drawable.border_closed)
             view.text = context.getText(R.string.text_closed)
         } else {
             view.setTextColor(ContextCompat.getColorStateList(context, R.color.text_opened))
-            view.background = ContextCompat.getDrawable(context, R.drawable.border_opened)
             view.text = context.getText(R.string.text_opened)
         }
     }

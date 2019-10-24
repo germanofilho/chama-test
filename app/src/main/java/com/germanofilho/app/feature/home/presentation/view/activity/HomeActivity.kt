@@ -31,6 +31,8 @@ class HomeActivity : BaseActivity(), IHomeView {
         setContentView(R.layout.activity_home)
         setupObservers()
 
+        setSupportActionBar(toolbar)
+
         if(permissionHelper.permissionGranted()){
             setLastLocationListener()
         }
